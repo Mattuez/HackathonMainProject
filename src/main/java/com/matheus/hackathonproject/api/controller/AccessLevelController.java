@@ -4,6 +4,7 @@ import com.matheus.hackathonproject.api.assembler.accessLevel.AccessLevelDtoAsse
 import com.matheus.hackathonproject.api.assembler.accessLevel.AccessLevelDtoDisassembler;
 import com.matheus.hackathonproject.api.model.accessLevel.AccessLevelDto;
 import com.matheus.hackathonproject.api.model.accessLevel.AccessLevelInputDto;
+import com.matheus.hackathonproject.core.security.CheckSecurity;
 import com.matheus.hackathonproject.domain.exceptions.BusinessException;
 import com.matheus.hackathonproject.domain.exceptions.PermissionNotFoundException;
 import com.matheus.hackathonproject.domain.model.AccessLevel;
@@ -31,16 +32,19 @@ public class AccessLevelController {
         this.accessLevelDtoDisassembler = accessLevelDtoDisassembler;
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canSearch
     @GetMapping
     public List<AccessLevelDto> getAll() {
         return accessLevelDtoAssembler.toDtoCollection(accessLevelRegistrationService.searchAll());
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canSearch
     @GetMapping("/{accessLevelId}")
     public AccessLevelDto getById(@PathVariable("accessLevelId") Long accessLevelId) {
         return accessLevelDtoAssembler.toDto(accessLevelRegistrationService.search(accessLevelId));
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canAlter
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AccessLevelDto add(@RequestBody @Valid AccessLevelInputDto accessLevelInputDto) {
@@ -53,6 +57,7 @@ public class AccessLevelController {
         }
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canAlter
     @PutMapping("/{accessLevelId}")
     public AccessLevelDto update(@PathVariable("accessLevelId") Long accessLevelId,
                               @RequestBody @Valid AccessLevelInputDto source) {
@@ -67,6 +72,7 @@ public class AccessLevelController {
         }
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canAlter
     @DeleteMapping("/{accessLevelId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remove(@PathVariable("accessLevelId") Long accessLevelId) {

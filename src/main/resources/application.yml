@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost/hackathon-project?createDatabaseIfNotExist=true&serverTimeZone=UTC
     username: root
-    password: admin
+    password: sqllabs
     driver-class-name: com.mysql.cj.jdbc.Driver
   jackson:
     deserialization:

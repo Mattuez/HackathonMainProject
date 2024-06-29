@@ -6,6 +6,7 @@ import com.matheus.hackathonproject.api.model.user.UserAddInputDto;
 import com.matheus.hackathonproject.api.model.user.UserChangePasswordDto;
 import com.matheus.hackathonproject.api.model.user.UserDto;
 import com.matheus.hackathonproject.api.model.user.UserUpdateInputDto;
+import com.matheus.hackathonproject.core.security.CheckSecurity;
 import com.matheus.hackathonproject.domain.exceptions.AccessLevelNotFoundException;
 import com.matheus.hackathonproject.domain.exceptions.BusinessException;
 import com.matheus.hackathonproject.domain.model.User;
@@ -30,11 +31,13 @@ public class UserController{
         this.userDtoDisassembler = userDtoDisassembler;
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canSearch
     @GetMapping
     public List<UserDto> getAll(){
         return userDtoAssembler.toDtoCollection(userService.searchAll());
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canSearchSelf
     @GetMapping("/{userId}")
     public UserDto getById(@PathVariable("userId") Long userId) {
         return userDtoAssembler.toDto(userService.search(userId));
@@ -52,6 +55,7 @@ public class UserController{
         }
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canAlterUser
     @PutMapping("/{userId}")
     public UserDto update(@PathVariable("userId") Long userId,
                           @RequestBody @Valid UserUpdateInputDto source) {
@@ -66,12 +70,14 @@ public class UserController{
         }
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canAlterUser
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remove(@PathVariable("userId") Long userId) {
         userService.exclude(userId);
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canAlterOwnPassword
     @PutMapping("/{userId}/password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changePassword(@PathVariable("userId") Long userId,

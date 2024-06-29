@@ -7,4 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface TransactionRepository extends CustomJpaRepository<Transaction, Long> {
+
+    Optional<Transaction> findByIdAndUserId(Long id, Long userId);
 }

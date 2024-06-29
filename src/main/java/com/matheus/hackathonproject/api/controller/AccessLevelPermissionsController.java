@@ -2,6 +2,7 @@ package com.matheus.hackathonproject.api.controller;
 
 import com.matheus.hackathonproject.api.assembler.permission.PermissionDtoAssembler;
 import com.matheus.hackathonproject.api.model.permission.PermissionDto;
+import com.matheus.hackathonproject.core.security.CheckSecurity;
 import com.matheus.hackathonproject.domain.model.AccessLevel;
 import com.matheus.hackathonproject.domain.service.AccessLevelRegistrationService;
 import com.matheus.hackathonproject.domain.service.PermissionRegistrationService;
@@ -27,6 +28,7 @@ public class AccessLevelPermissionsController {
         this.permissionRegistrationService = permissionRegistrationService;
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canSearch
     @GetMapping
     public List<PermissionDto> getAllByAccessLevelId(@PathVariable("accessLevelId") Long accessLevelId) {
         AccessLevel accessLevel = accessLevelRegistrationService.search(accessLevelId);
@@ -34,6 +36,7 @@ public class AccessLevelPermissionsController {
         return permissionDtoAssembler.toDtoCollection(accessLevel.getPermissions());
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canSearch
     @PutMapping("/{permissionId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void associate(@PathVariable("accessLevelId") Long accessLevelId,
@@ -41,6 +44,7 @@ public class AccessLevelPermissionsController {
         accessLevelRegistrationService.associatePermission(accessLevelId, permissionId);
     }
 
+    @CheckSecurity.UserGroupAccessLevel.canSearch
     @DeleteMapping("/{permissionId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void disassociate(@PathVariable("accessLevelId") Long accessLevelId,

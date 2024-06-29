@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class TransactionDto {
 
+    private Long id;
     private Long value;
     private String userCpf;
 }
