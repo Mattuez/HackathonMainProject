@@ -20,13 +20,3 @@ spring:
       resource-server:
         jwt:
           jwk-set-uri: http://localhost:8081/oauth2/jwks
-  mail:
-    host: smtp.sendgrid.net
-    port: 587
-    username: apikey
-    password:
-
-hackathon:
-  email:
-    sender: FoodDelivery <fooddeliveryapiteste@gmail.com>
-    impl: sand_box
