@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Table(
-        name = "Transaction"
+        name = "_transaction"
 )
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Transaction {
