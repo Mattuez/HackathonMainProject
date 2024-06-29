@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -20,6 +21,19 @@ public class User {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(
+            name = "fullName",
+            nullable = false
+    )
+    private String fullName;
+
+    @Column(
+            name = "cpf",
+            nullable = false,
+            unique = true
+    )
+    private String cpf;
 
     @Column(
             name = "email",
@@ -51,6 +65,11 @@ public class User {
             )
     )
     private Set<AccessLevel> accessLevels = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "user"
+    )
+    private List<Transaction> transactions = new ArrayList<>();
 
     public void addAccessLevel(AccessLevel accessLevel) {
         this.accessLevels.add(accessLevel);

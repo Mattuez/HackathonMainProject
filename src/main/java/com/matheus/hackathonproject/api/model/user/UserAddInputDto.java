@@ -15,4 +15,10 @@ public class UserAddInputDto {
 
     @NotBlank
     private String password;
+
+    @NotBlank
+    private String fullName;
+
+    @NotBlank
+    private String cpf;
 }
