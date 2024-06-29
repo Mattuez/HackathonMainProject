@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: HackathonProject
+  datasource:
+    url: jdbc:mysql://localhost/hackathon-project?createDatabaseIfNotExist=true&serverTimeZone=UTC
+    username: root
+    password: M_th__s03!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+      fail-on-ignored-properties: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8081/oauth2/jwks
+  mail:
+    host: smtp.sendgrid.net
+    port: 587
+    username: apikey
+    password:
+
+hackathon:
+  email:
+    sender: FoodDelivery <fooddeliveryapiteste@gmail.com>
+    impl: sand_box
